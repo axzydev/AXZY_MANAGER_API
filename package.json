@@ -1,0 +1,50 @@
+{
+  "name": "@axzy/manager-api",
+  "description": "api server for axzy manager",
+  "main": "index.ts",
+  "version": "1.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "maag070208",
+    "email": "maag070208@gmail.com"
+  },
+  "scripts": {
+    "dev": "sh scripts/run_dev.sh",
+    "start": "NODE_ENV=development nodemon src/index.ts tsc --traceResolution",
+    "build": "swc src -d dist --source-maps --copy-files",
+    "prisma:generate": "npx prisma generate",
+    "migrate:deploy": "npx prisma migrate deploy",
+    "migrate:dev": "npx prisma migrate dev --name 'database_migration'",
+    "migrate:reset": "npx prisma migrate reset --force",
+    "production": "yarn build && sh scripts/run_production_mode.sh"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.7.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "reflect-metadata": "^0.2.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
+  },
+  "devDependencies": {
+    "@swc/cli": "^0.3.10",
+    "@swc/core": "^1.4.7",
+    "@tsconfig/node16": "^16.1.1",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.21",
+    "@types/json-bigint": "^1.0.4",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
+    "nodemon": "^3.0.2",
+    "prisma": "^5.7.1",
+    "rimraf": "^5.0.5",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
+  }
+}

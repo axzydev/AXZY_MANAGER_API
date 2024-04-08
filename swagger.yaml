@@ -1,0 +1,88 @@
+openapi: 3.0.3
+info:
+  title: AXZY_MANAGEMENT
+  description: API documentation for AXZY_MANAGEMENT
+  version: 1.0.0
+servers:
+  - url: http://localhost:4321
+tags:
+  - name: index
+    description: Index management
+  - name: app
+    description: App management
+  - name: mandt
+    description: Mandt management
+  - name: user
+    description: User management
+paths:
+  /:
+    get:
+      tags:
+        - index
+      summary: Get index
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Welcome to AXZY_MANAGEMENT
+  /app:
+    get:
+      tags:
+        - app
+      summary: Get all apps
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apps:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: 1
+                        name:
+                          type: string
+                          example: App 1
+                        description:
+                          type: string
+                          example: Description of App 1
+    post:
+      tags:
+        - app
+      summary: Create app
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: App 1
+                description:
+                  type: string
+                  example: Description of App 1
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1

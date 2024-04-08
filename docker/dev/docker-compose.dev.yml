@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+  database:
+    image: mysql:8.0.36
+    container_name: axzy_manager_db
+    env_file: ../../.env.development.local
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 0
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_ROOT_AUTHENTICATION_PLUGIN: caching_sha2_password
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u ${MYSQL_USER} --password=${MYSQL_PASSWORD}",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+
+  shadow_database:
+    image: mysql:8.0.36
+    container_name: axzy_manager_shadow_db
+    env_file: ../../.env.development.local
+    environment:
+      MYSQL_DATABASE: MIGRATIONS
+      MYSQL_ALLOW_EMPTY_PASSWORD: 0
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_ROOT_AUTHENTICATION_PLUGIN: caching_sha2_password
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "mysqladmin ping -h localhost -u ${MYSQL_USER} --password=${MYSQL_PASSWORD}",
+        ]
+      interval: 15s
+      timeout: 10s
+      retries: 5
+  axzy_manager_backend:
+    stdin_open: true
+    tty: true
+    build:
+      context: ../../
+      dockerfile: docker/dev/Dockerfile
+    ports:
+      - 4321:4321
+      - 9229:9229
+    env_file: ../../.env.development.local
+    environment:
+      - PORT=4321
+      - NODE_ENV=development
+    volumes:
+      - ../../.:/code
+    depends_on:
+      database:
+        condition: service_healthy

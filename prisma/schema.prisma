@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model APPKEY {
+  Id        Int      @id @default(autoincrement())
+  UUID      String   @unique @default(cuid())
+  APPKEY    String   @unique @default(cuid())
+  MANDT     String  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  delrow    Boolean  @default(false)
+}
+
+model MANDT {
+  Id        Int               @id @default(autoincrement())
+  UUID      String            @unique @default(cuid())
+  MANDT     String            @unique
+  NAME      String
+  DESCTN    String
+  STATUS    MANDT_STATUS_ENUM @default(ACTIVE)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+  delrow    Boolean           @default(false)
+}
+
+model USER {
+  Id        Int              @id @default(autoincrement())
+  UUID      String           @unique @default(cuid())
+  MANDT     String
+  USRNME    String
+  PSWRD     String
+  EMAIL     String           @unique
+  PHONE     String           @unique
+  STATUS    USER_STATUS_ENUM @default(ACTIVE)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  delrow    Boolean          @default(false)
+}
+
+enum MANDT_STATUS_ENUM {
+  ACTIVE
+  INACTIVE
+  DELETED
+}
+
+enum USER_STATUS_ENUM {
+  ACTIVE
+  INACTIVE
+  DELETED
+}
