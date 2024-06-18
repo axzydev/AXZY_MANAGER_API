@@ -19,7 +19,7 @@ export const appKeyValidationMiddleware = async (
       });
     }
 
-    if(appKey !== app.APPKEY) {
+    if (appKey !== app.APPKEY) {
       return responseHandler({
         res,
         status: 401,
@@ -27,12 +27,12 @@ export const appKeyValidationMiddleware = async (
         data: null,
       });
     }
-    
+
     req.params.mandt = app.MANDT;
 
     next();
   } catch (err: any) {
-    console.log({err});
+    console.log({ err });
     return responseHandler({
       res,
       status: 500,

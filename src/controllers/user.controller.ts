@@ -116,7 +116,7 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     const { mandt } = req.params;
-    const user = await getUserByEmail(email);
+    const user = await getUserByEmail(email, mandt);
     if (!user) {
       return responseHandler({
         res,

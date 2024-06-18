@@ -11,7 +11,6 @@ export const createMandtValidationMiddleware = async (
     const { mandt } = req.body;
 
     const mandtDb = await getMandtByMANDT(mandt);
-    console.log({ mandtDb });
     if (mandtDb) {
       return responseHandler({
         res,
