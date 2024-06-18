@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 
-import { responseHandler } from "@utils/responseHandler";
-import { addRole, getRole, getRoles } from "@services/role.service";
-import { RoleDTO } from "@shared/DTO/role.DTO";
+import { responseHandler } from "../utils/responseHandler";
+import { addRole, getRole, getRoles } from "../services/role.service";
+import { RoleDTO } from "../shared/DTO/role.DTO";
 import {
   roleDTOToEntity,
   roleEntityToDTO,
   rolesEntityToDTO,
-} from "@shared/mapper/role.mapper";
+} from "../shared/mapper/role.mapper";
 
 export const create = async (req: Request, res: Response) => {
   try {

@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 
-import { responseHandler } from "@utils/responseHandler";
-import { RightDTO } from "@shared/DTO/right.DTO";
+import { responseHandler } from "../utils/responseHandler";
+import { RightDTO } from "../shared/DTO/right.DTO";
 import {
   rightDTOToEntity,
   rightEntityToDTO,
   rightsEntityToDTO,
-} from "@shared/mapper/right.mapper";
-import { addRight, getRight, getRights } from "@services/right.service";
+} from "../shared/mapper/right.mapper";
+import { addRight, getRight, getRights } from "../services/right.service";
 
 export const create = async (req: Request, res: Response) => {
   try {

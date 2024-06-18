@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { responseHandler } from "../../utils/responseHandler";
-import { verifyJWT } from "@utils/security";
+import { verifyJWT } from "../../utils/security";
 
 export const tokenValidationMiddleware = async (
   req: Request,

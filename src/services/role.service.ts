@@ -1,5 +1,5 @@
-import { prismaClient } from "@config/prisma";
-import { RoleEntity } from "@shared/models/role";
+import { prismaClient } from "../config/prisma";
+import { RoleEntity } from "../shared/models/role";
 
 export const addRole = async (role: RoleEntity): Promise<RoleEntity | null> => {
   try {

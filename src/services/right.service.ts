@@ -1,5 +1,5 @@
-import { prismaClient } from "@config/prisma";
-import { RightEntity } from "@shared/models/right";
+import { prismaClient } from "../config/prisma";
+import { RightEntity } from "../shared/models/right";
 
 export const addRight = async (
   right: RightEntity

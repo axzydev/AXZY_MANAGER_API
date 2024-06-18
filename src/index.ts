@@ -3,12 +3,11 @@ import express from "express";
 import helmet from "helmet";
 import swaggerUi from "swagger-ui-express";
 import YAML from "yamljs";
+import { apiValidator } from "./shared/middleware/schema-validator.middleware";
+import { tokenValidationMiddleware } from "./shared/middleware/token-validation.middleware";
+import apiRouter from "./routes/api.router";
 
 //ROUTES
-import apiRouter from "@routes/api.router";
-import { tokenValidationMiddleware } from "@shared/middleware/token-validation.middleware";
-import { apiValidator } from "@shared/middleware/schema-validator.middleware";
-
 const app = express();
 
 const PORT = process.env.PORT || 3000;

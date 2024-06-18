@@ -1,5 +1,5 @@
-import { prismaClient } from "@config/prisma";
-import { PolicyEntity } from "@shared/models/policy";
+import { prismaClient } from "../config/prisma";
+import { PolicyEntity } from "../shared/models/policy";
 
 export const addPolicy = async (
   policy: PolicyEntity

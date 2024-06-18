@@ -1,9 +1,9 @@
-import { RightDTO } from "@shared/DTO/right.DTO";
-import { RightEntity } from "@shared/models/right";
+import { RightDTO } from "../../shared/DTO/right.DTO";
+import { RightEntity } from "../../shared/models/right";
 import {
   rightDTOTransformer,
   rightEntityTransformer,
-} from "@shared/transformers/right.transformer";
+} from "../../shared/transformers/right.transformer";
 
 export const rightEntityToDTO = (entity: RightEntity): RightDTO =>
   rightDTOTransformer(entity);

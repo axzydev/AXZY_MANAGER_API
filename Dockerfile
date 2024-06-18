@@ -7,10 +7,11 @@ WORKDIR /app
 COPY package*.json ./
 COPY swagger.yaml ./
 COPY prisma ./prisma/
+COPY yarn.lock ./
 COPY .env ./
 
 # Install app dependencies
-RUN npm install
+RUN yarn
 
 COPY . .
 
@@ -18,7 +19,7 @@ RUN npx prisma generate
 
 RUN npx prisma db seed
 
-RUN npm run build
+RUN yarn build
 
 
 FROM node:18-alpine
@@ -30,4 +31,4 @@ COPY --from=builder /app/.env ./
 COPY --from=builder /app/dist ./dist
 
 EXPOSE 4000
-CMD [ "npm", "run", "start" ]
+CMD [ "yarn", "start" ]

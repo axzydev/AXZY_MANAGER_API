@@ -1,5 +1,5 @@
-import { getAll, getById, create } from "@controllers/policy.controller";
 import { Router } from "express";
+import { create, getAll, getById } from "../controllers/policy.controller";
 
 const router = Router();
 

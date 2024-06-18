@@ -1,5 +1,5 @@
-import { RoleDTO } from "@shared/DTO/role.DTO";
-import { RoleEntity } from "@shared/models/role";
+import { RoleDTO } from "../../shared/DTO/role.DTO";
+import { RoleEntity } from "../../shared/models/role";
 
 export const roleDTOTransformer = (entity: RoleEntity): RoleDTO => {
   return {

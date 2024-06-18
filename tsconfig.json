@@ -2,18 +2,9 @@
   "compilerOptions": {
     "target": "es2016",
     "module": "commonjs",
-    "baseUrl": "./src",
+    "outDir": "dist",
     "types": ["node"],
-    "paths": {
-      "@controllers/*": ["controllers/*"],
-      "@services/*": ["services/*"],
-      "@routes/*": ["routes/*"],
-      "@config/*": ["config/*"],
-      "@shared/*": ["shared/*"],
-      "@utils/*": ["utils/*"]
-    },
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true
   }

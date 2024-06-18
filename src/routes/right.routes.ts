@@ -1,4 +1,4 @@
-import { getAll, getById, create } from "@controllers/right.controller";
+import { getAll, getById, create } from "../controllers/right.controller";
 import { Router } from "express";
 
 const router = Router();

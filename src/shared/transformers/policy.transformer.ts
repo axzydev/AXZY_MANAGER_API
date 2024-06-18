@@ -1,5 +1,5 @@
-import { PolicyDTO } from "@shared/DTO/policy.DTO";
-import { PolicyEntity } from "@shared/models/policy";
+import { PolicyDTO } from "../../shared/DTO/policy.DTO";
+import { PolicyEntity } from "../../shared/models/policy";
 
 export const policyDTOTransformer = (entity: PolicyEntity): PolicyDTO => {
   return {

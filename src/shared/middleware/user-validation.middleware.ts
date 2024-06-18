@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { getUserByEmail } from "../../services/user.service";
 import { responseHandler } from "../../utils/responseHandler";
-import { getMandtByMANDT } from "@services/mandt.service";
+import { getMandtByMANDT } from "../../services/mandt.service";
 
 export const userValidationMiddleware = async (
   req: Request,

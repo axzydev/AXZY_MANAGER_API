@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { addPolicy, getPolicies, getPolicy } from "@services/policy.service";
-import { PolicyDTO } from "@shared/DTO/policy.DTO";
+import { addPolicy, getPolicies, getPolicy } from "../services/policy.service";
+import { PolicyDTO } from "../shared/DTO/policy.DTO";
 import {
   policiesEntityToDTO,
   policyDTOToEntity,
   policyEntityToDTO,
-} from "@shared/mapper/policy.mapper";
-import { responseHandler } from "@utils/responseHandler";
+} from "../shared/mapper/policy.mapper";
+import { responseHandler } from "../utils/responseHandler";
 
 export const create = async (req: Request, res: Response) => {
   try {
