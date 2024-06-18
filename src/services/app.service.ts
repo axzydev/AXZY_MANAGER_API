@@ -50,7 +50,7 @@ export const getApplicationByKey = async (
 
 export const getApplicationByMANDT = async (
   mandt: string
-): Promise<AppKeyEntity[] | null> => {
+): Promise<AppKeyEntity[]> => {
   try {
     const apps = await prismaClient.aPPKEY.findMany({
       where: {
@@ -59,6 +59,22 @@ export const getApplicationByMANDT = async (
       },
     });
     return apps;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const removeApplication = async (
+  appKey: string
+): Promise<AppKeyEntity | null> => {
+  try {
+    const app = await prismaClient.aPPKEY.delete({
+      where: {
+        UUID: appKey,
+      },
+    });
+    return app;
   } catch (err) {
     console.log(err);
     throw err;
@@ -75,6 +91,25 @@ export const softDeleteApplication = async (
       },
       data: {
         delrow: true,
+      },
+    });
+    return app;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const enableAppKeyApplication = async (
+  appKey: string
+): Promise<AppKeyEntity | null> => {
+  try {
+    const app = await prismaClient.aPPKEY.update({
+      where: {
+        UUID: appKey,
+      },
+      data: {
+        delrow: false,
       },
     });
     return app;

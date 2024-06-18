@@ -3,16 +3,15 @@ generator client {
 }
 
 datasource db {
-  provider          = "mysql"
-  url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model APPKEY {
   Id        Int      @id @default(autoincrement())
   UUID      String   @unique @default(cuid())
   APPKEY    String   @unique @default(cuid())
-  MANDT     String  
+  MANDT     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   delrow    Boolean  @default(false)
@@ -36,12 +35,106 @@ model USER {
   MANDT     String
   USRNME    String
   PSWRD     String
-  EMAIL     String           @unique
-  PHONE     String           @unique
+  EMAIL     String
+  PHONE     String
   STATUS    USER_STATUS_ENUM @default(ACTIVE)
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
   delrow    Boolean          @default(false)
+  policies  POLICIES[]
+
+  @@unique([MANDT, USRNME, EMAIL, PHONE])
+}
+
+model POLICIES {
+  Id        Int      @id @default(autoincrement())
+  UUID      String   @unique @default(cuid())
+  MANDT     String
+  POLICY    String   @unique
+  DESCTN    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  delrow    Boolean  @default(false)
+
+  roles          ROLES[]
+  USER           USER?            @relation(fields: [uSERId], references: [Id])
+  uSERId         Int?
+  POLICIES_ROLES POLICIES_ROLES[]
+
+  @@unique([MANDT, POLICY])
+}
+
+model POLICIES_ROLES {
+  Id        Int      @id @default(autoincrement())
+  UUID      String   @unique @default(cuid())
+  MANDT     String
+  POLICY    String
+  ROLE      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  delrow    Boolean  @default(false)
+
+  policies   POLICIES? @relation(fields: [policiesId], references: [Id])
+  policiesId Int?
+
+  roles   ROLES? @relation(fields: [rolesId], references: [Id])
+  rolesId Int?
+
+  @@unique([MANDT, POLICY, ROLE])
+}
+
+model ROLES {
+  Id        Int      @id @default(autoincrement())
+  UUID      String   @unique @default(cuid())
+  MANDT     String
+  ROLE      String   @unique
+  DESCTN    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  delrow    Boolean  @default(false)
+
+  rights         RIGHTS[]
+  policies       POLICIES?        @relation(fields: [policiesId], references: [Id])
+  policiesId     Int?
+  POLICIES_ROLES POLICIES_ROLES[]
+  ROLE_RIGHTS    ROLE_RIGHTS[]
+
+  @@unique([MANDT, ROLE])
+}
+
+model ROLE_RIGHTS {
+  Id        Int      @id @default(autoincrement())
+  UUID      String   @unique @default(cuid())
+  MANDT     String
+  ROLE      String
+  RIGHT     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  delrow    Boolean  @default(false)
+
+  roles   ROLES? @relation(fields: [rolesId], references: [Id])
+  rolesId Int?
+
+  rights   RIGHTS? @relation(fields: [rightsId], references: [Id])
+  rightsId Int?
+
+  @@unique([MANDT, ROLE, RIGHT])
+}
+
+model RIGHTS {
+  Id          Int           @id @default(autoincrement())
+  UUID        String        @unique @default(cuid())
+  MANDT       String
+  RIGHT       String        @unique
+  DESCTN      String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  delrow      Boolean       @default(false)
+  roles       ROLES?        @relation(fields: [rolesId], references: [Id])
+  rolesId     Int?
+  ROLE_RIGHTS ROLE_RIGHTS[]
+
+  @@unique([MANDT, RIGHT])
 }
 
 enum MANDT_STATUS_ENUM {

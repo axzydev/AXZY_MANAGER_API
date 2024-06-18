@@ -1,2 +1,0 @@
--- DropIndex
-DROP INDEX `APPKEY_MANDT_key` ON `APPKEY`;

@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from "express";
-import { getApplicationByKey } from "../../services/app.service";
+import { NextFunction, Request, Response } from "express";
+import { getApplicationByMANDT } from "../../services/app.service";
 import { responseHandler } from "../../utils/responseHandler";
 
 export const addAppKeyValidationMiddleware = async (
@@ -8,12 +8,11 @@ export const addAppKeyValidationMiddleware = async (
   next: NextFunction
 ) => {
   try {
+    const { mandt } = req.body;
 
-    const appKey = req.headers["axzy_key"] as string;
-
-    const app = await getApplicationByKey(appKey);
-
-    if (app) {
+    const apps = await getApplicationByMANDT(mandt);
+    
+    if (apps?.length > 0) {
       return responseHandler({
         res,
         status: 400,

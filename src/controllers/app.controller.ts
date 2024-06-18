@@ -3,8 +3,10 @@ import { responseHandler } from "../utils/responseHandler";
 import { AppKeyDTO } from "../shared/DTO/app-key.DTO";
 import {
   addApllication,
+  enableAppKeyApplication,
   getAllApplications,
   getApplicationByKey,
+  removeApplication,
   softDeleteApplication,
 } from "../services/app.service";
 import {
@@ -77,7 +79,7 @@ export const remove = async (req: Request, res: Response) => {
   try {
     const { uuid } = req.params;
 
-    const app = await softDeleteApplication(uuid);
+    const app = await removeApplication(uuid);
 
     if (!app) {
       return responseHandler({
@@ -133,4 +135,66 @@ export const getById = async (req: Request, res: Response) => {
       data: error,
     });
   }
-}
+};
+
+export const update = async (req: Request, res: Response) => {
+  try {
+    const { uuid } = req.params;
+
+    const app = await enableAppKeyApplication(uuid);
+
+    if (!app) {
+      return responseHandler({
+        res,
+        status: 404,
+        message: "Application not found",
+        data: null,
+      });
+    }
+
+    return responseHandler({
+      res,
+      status: 200,
+      message: "Application removed successfully",
+      data: true,
+    });
+  } catch (error: any) {
+    return responseHandler({
+      res,
+      status: 500,
+      message: error.message,
+      data: error,
+    });
+  }
+};
+
+export const disable = async (req: Request, res: Response) => {
+  try {
+    const { uuid } = req.params;
+
+    const app = await softDeleteApplication(uuid);
+
+    if (!app) {
+      return responseHandler({
+        res,
+        status: 404,
+        message: "Application not found",
+        data: null,
+      });
+    }
+
+    return responseHandler({
+      res,
+      status: 200,
+      message: "Application removed successfully",
+      data: true,
+    });
+  } catch (error: any) {
+    return responseHandler({
+      res,
+      status: 500,
+      message: error.message,
+      data: error,
+    });
+  }
+};

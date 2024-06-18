@@ -17,13 +17,15 @@ export const addUser = async (data: UserEntity): Promise<UserEntity | null> => {
 };
 
 export const getUserByUsername = async (
-  username: string
+  username: string,
+  mandt: string = "00000"
 ): Promise<UserEntity | null> => {
   try {
     const user = await prismaClient.uSER.findFirst({
       where: {
         delrow: false,
         USRNME: username,
+        MANDT: mandt,
       },
     });
     return user;
@@ -34,13 +36,15 @@ export const getUserByUsername = async (
 };
 
 export const getUserByEmail = async (
-  email: string
+  email: string,
+  mandt: string = "00000"
 ): Promise<UserEntity | null> => {
   try {
     const user = await prismaClient.uSER.findFirst({
       where: {
         delrow: false,
         EMAIL: email,
+        MANDT: mandt,
       },
     });
     return user;
@@ -50,11 +54,14 @@ export const getUserByEmail = async (
   }
 };
 
-export const getAllUsers = async (): Promise<UserEntity[] | null> => {
+export const getAllUsers = async (
+  mandt: string = "00000"
+): Promise<UserEntity[] | null> => {
   try {
     const users = await prismaClient.uSER.findMany({
       where: {
         delrow: false,
+        MANDT: mandt,
       },
     });
     return users;
@@ -62,7 +69,7 @@ export const getAllUsers = async (): Promise<UserEntity[] | null> => {
     console.log(err);
     throw err;
   }
-}
+};
 
 export const getUsersByMandt = async (
   mandt: string
@@ -83,13 +90,15 @@ export const getUsersByMandt = async (
 
 export const updateUserStatus = async (
   id: number,
-  status: USER_STATUS_ENUM
+  status: USER_STATUS_ENUM,
+  mandt: string = "00000"
 ): Promise<UserEntity | null> => {
   try {
     const user = await prismaClient.uSER.update({
       where: {
         delrow: false,
         Id: id,
+        MANDT: mandt,
       },
       data: {
         STATUS: status,
@@ -103,12 +112,14 @@ export const updateUserStatus = async (
 };
 
 export const softDeleteUser = async (
-  id: number
+  id: number,
+  mandt: string = "00000"
 ): Promise<UserEntity | null> => {
   try {
     const user = await prismaClient.uSER.update({
       where: {
         Id: id,
+        MANDT: mandt,
       },
       data: {
         delrow: true,

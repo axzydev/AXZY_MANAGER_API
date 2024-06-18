@@ -6,22 +6,22 @@ info:
 servers:
   - url: http://localhost:4321
 tags:
-  - name: index
+  - name: Index
     description: Index management
-  - name: app
+  - name: App
     description: App management
-  - name: mandt
+  - name: Mandt
     description: Mandt management
-  - name: user
+  - name: User
     description: User management
 paths:
-  /:
+  /api/v1/:
     get:
       tags:
-        - index
-      summary: Get index
+        - Index
+      summary: Get Index
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -31,52 +31,38 @@ paths:
                   message:
                     type: string
                     example: Welcome to AXZY_MANAGEMENT
-  /app:
+  /api/v1/app:
     get:
       tags:
-        - app
+        - App
       summary: Get all apps
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  apps:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          example: 1
-                        name:
-                          type: string
-                          example: App 1
-                        description:
-                          type: string
-                          example: Description of App 1
+                type: array
+                items:
+                  $ref: "#/components/schemas/App"
+        "400":
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
     post:
       tags:
-        - app
+        - App
       summary: Create app
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: App 1
-                description:
-                  type: string
-                  example: Description of App 1
+              $ref: "#/components/schemas/CreateApp"
       responses:
-        '201':
+        "201":
           description: Created
           content:
             application/json:
@@ -86,3 +72,337 @@ paths:
                   id:
                     type: string
                     example: 1
+        "400":
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/v1/app/{uuid}:
+    get:
+      tags:
+        - App
+      summary: Get app
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+          example: 5Zc9vZFtQjwTz58QYrWfCW
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/App"
+        "400":
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - App
+      summary: Update app
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+          example: 5Zc9vZFtQjwTz58QYrWfCW
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: App updated
+        "400":
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - App
+      summary: Delete app
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+          example: 5Zc9vZFtQjwTz58QYrWfCW
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: App deleted
+        "400":
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      tags:
+        - App
+      summary: Patch app
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+          example: 5Zc9vZFtQjwTz58QYrWfCW
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: App patched
+        "400":
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/v1/mandt:
+    get:
+      tags:
+        - Mandt
+      summary: Get all mandts
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Mandt"
+        "400":
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Mandt
+      summary: Create mandt
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MandtCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1
+        "400":
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/v1/user:
+    get:
+      tags:
+        - User
+      summary: Get all users
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "400":
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - User
+      summary: Create user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreate"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 1
+        "400":
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /api/v1/user/login:
+    post:
+      tags:
+        - User
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserLogin"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFhbWFybyIsImlhdCI6MTYxNjIzOTAyMn0.7J1jw9Z1
+# Components
+components:
+  schemas:
+    App:
+      type: object
+      properties:
+        uuid:
+          type: string
+          example: 5Zc9vZFtQjwTz58QYrWfCW
+        appKey:
+          type: string
+          example: 5Zc9vZFtQjwTz58QYrWfCW
+        mandt:
+          type: string
+          example: "00000"
+    CreateApp:
+      type: object
+      properties:
+        mandt:
+          type: string
+          example: "00000"
+    Mandt:
+      type: object
+      properties:
+        uuid:
+          type: string
+          example: 5Zc9vZFtQjwTz58QYrWfCW
+        mandt:
+          type: string
+          example: "00000"
+        name:
+          type: string
+          example: "AXZY"
+        description:
+          type: string
+          example: "AXZY Management"
+        status:
+          type: string
+          example: "active"
+    MandtCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "AXZY"
+        description:
+          type: string
+          example: "AXZY Management"
+        status:
+          type: string
+          example: "active"
+    User:
+      type: object
+      properties:
+        uuid:
+          type: string
+          example: 5Zc9vZFtQjwTz58QYrWfCW
+        mandt:
+          type: string
+          example: "00000"
+        username:
+          type: string
+          example: "John Doe"
+        status:
+          type: string
+          example: "active"
+    UserCreate:
+      type: object
+      properties:
+        mandt:
+          type: string
+          example: "00000"
+        username:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          example: "aamaro@axzy.dev"
+        password:
+          type: string
+          example: "password"
+        phone:
+          type: string
+          example: "1234567890"
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          example: "aamaro@axzy.dev"
+        password:
+          type: string
+          example: "password"
+    #
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+          example: "error"
+        message:
+          type: string
+          example: Error message
